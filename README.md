@@ -18,3 +18,5 @@ This install all the libraries
 ```bash
 nodejs app.js
 ```
+
+In your browser you can go to [localhost:3000](http://localhost:3000) to see the web.
