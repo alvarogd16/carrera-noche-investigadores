@@ -1,7 +1,8 @@
 import {Cronometro} from './Cronometro.js'
 import { Buttons } from './Buttons.js';
 
-
+var socket = io()
+// socket.emit("start")
 
 var elem = document.getElementById("cronometro");
 var timer = new Cronometro(elem);
