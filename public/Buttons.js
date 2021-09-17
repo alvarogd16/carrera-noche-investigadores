@@ -1,8 +1,9 @@
 export class Buttons {
-    constructor(startButtons, stopButtons, chrono) {
+    constructor(startButtons, stopButtons, reset, chrono) {
         this.startButtons = startButtons;
         this.stopButtons = stopButtons;
         this.chrono = chrono;
+        this.reset = reset;
     }
 
     initButtons() {
@@ -32,6 +33,10 @@ export class Buttons {
             // Disabled all the buttons. The correspond start button enable 
             // again the button
             but.disabled = true;
+        }
+
+        this.reset.onclick = () => {
+            this.chrono.reset();
         }
     }
 }

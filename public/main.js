@@ -13,5 +13,6 @@ tableControl.resetTimes();
 
 var startButtons = document.getElementsByClassName("start");
 var stopButtons = document.getElementsByClassName("stop");
-var buttons = new Buttons(startButtons, stopButtons, timer)
+var resetButton = document.getElementById("reset");
+var buttons = new Buttons(startButtons, stopButtons, resetButton, timer)
 buttons.initButtons();
