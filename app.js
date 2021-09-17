@@ -1,14 +1,31 @@
-const express = require('express')
-const app = express()
-const http = require('http')
-const server = http.createServer(app)
-const {Server} = require("socket.io")
+const express = require('express');
+const app = express();
+const http = require('http');
+const server = http.createServer(app);
+const {Server} = require("socket.io");
 const io = new Server(server);
-const port = 3000
+const port = 3000;
+
+const isPi = require("detect-rpi");
+
+/* ****************************************** */
+/* Raspberry pi logic                         */
+/* ****************************************** */
+
+if(isPi()) {
+  console.log("Running in a Raspberry pi");
+  // TODO 
+} else {
+  console.log("Not running in a Raspberry pi");
+}
+
+
+/* ****************************************** */
+/* Web server                                 */
+/* ****************************************** */
 
 // Serves all the contents of the public folder
 app.use(express.static('public'));
-
 
 // Dont needed 
 app.get('/', (req, res) => {
