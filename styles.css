@@ -1,0 +1,113 @@
+/*Page background*/
+body
+{
+  background-color: white;
+  font-size: 35px;
+  font-family: 'Arial';
+}
+
+.ronda:first-child
+{
+  margin-left: 40px;
+}
+
+.ronda
+{
+  float:left;
+  margin-left: 175px;
+  margin-top: 20px;
+  text-align: left;
+}
+
+#final
+{
+  clear: both;
+  margin-left: 40px;
+  margin-top: 80px;
+}
+
+.crono
+{
+  position: fixed;
+  margin-left: 690px;
+  margin-top: 500px;
+}
+
+#reset
+{
+  display: inline-block;
+  background: url('Resources/ResetBT_Resized.png') no-repeat;
+  position: fixed;
+  margin-left: 330px;
+  margin-top: -105px;
+  cursor: pointer;
+  border: none;
+  width: 80px;
+  height: 80px;
+}
+
+.start
+{
+  display: inline-block;
+  background: url('Resources/PlayBT_Resized.png') no-repeat;
+  cursor: pointer;
+  border: none;
+  width: 150px;
+  height: 150px;
+}
+
+.stop
+{
+  background: url('Resources/StopBT_Resized.png') no-repeat;
+  cursor: pointer;
+  border: none;
+  width: 150px;
+  height: 150px;
+  margin-left: 30px;
+}
+
+.time
+{
+  background: url('Resources/ChronoBackground.png') no-repeat;
+  font-size: 100px;
+  width: 320px;
+  height: 130px;
+  text-align: center;
+  line-height: 130px;
+}
+
+.start:hover, .stop:hover, #reset:hover
+{
+  opacity: 0.92;
+}
+
+.start:active, .stop:active, #reset:active
+{
+  transform: translateY(2px);
+}
+
+.podium
+{
+  transform: scale(0.6);
+  position: fixed;
+  margin-left: 970px;
+  margin-top: 570px;
+}
+
+#first
+{
+  position: fixed;
+  transform: translateX(460px) translateY(-420px) scale(2);
+}
+
+#second
+{
+  position: fixed;
+  transform: translateX(150px) translateY(-330px) scale(2);
+}
+
+#third
+{
+  position: fixed;
+  transform: translateX(760px) translateY(-280px) scale(2);
+}
