@@ -8,10 +8,11 @@ export class Tables {
         // TODO
         for(let table of this.tables) {
             let rowsArray = [...table.rows];
+            /*
             for(let i = 1; i < rowsArray.length; i++) {
                 console.log(rowsArray[i]);
             }
-            console.log("-------")
+            console.log("-------")*/
         }
     }
 }

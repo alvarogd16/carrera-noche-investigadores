@@ -79,7 +79,7 @@ if(isPi()) {
 		// final de carrera.
 		socket.on("falsaMeta", (data) => {
 			console.log("Falso fin carrera " + data);
-			soket.emit("meta", data);
+			socket.emit("meta", data);
 		});
 	});
 }
