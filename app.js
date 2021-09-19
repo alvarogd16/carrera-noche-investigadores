@@ -14,7 +14,28 @@ const isPi = require("detect-rpi");
 
 if(isPi()) {
   console.log("Running in a Raspberry pi");
-  // TODO 
+   
+  const Gpio = require('pigpio').Gpio;
+
+  const motor = new Gpio(17, {mode: Gpio.OUTPUT});
+  const servoPulse = { 'RESET': 500, 'START': 2500 };
+
+  io.on('connection', (socket) => {
+    console.log("Socket establish");
+    
+    socket.on("start", () => {
+      console.log("Race start. Servo down");
+			
+			motor.servoWrite(servoPulse.START);
+		});
+
+
+		socket.on("reset", () => {
+			console.log("Race reset. Servo up");
+
+			motor.servoWrite(servoPulse.RESET);
+		});
+	});
 } else {
   console.log("Not running in a Raspberry pi");
 }
@@ -32,6 +53,7 @@ app.get('/', (req, res) => {
   res.send('Hello World!')
 })
 
+/*
 // Socket connection. This will provide bidirentional communication to send
 // data (for sensor and actuators)
 io.on('connection', (socket) => {
@@ -51,7 +73,7 @@ io.on('connection', (socket) => {
 
     socket.emit("fin", id)
   })
-})
+}) */
 
 // Start the server in the indicate port
 server.listen(port, () => {

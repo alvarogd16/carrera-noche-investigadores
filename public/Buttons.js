@@ -1,9 +1,10 @@
 export class Buttons {
-    constructor(startButtons, stopButtons, reset, chrono) {
+    constructor(startButtons, stopButtons, reset, chrono, socket) {
         this.startButtons = startButtons;
         this.stopButtons = stopButtons;
         this.chrono = chrono;
         this.reset = reset;
+				this.socket = socket;
     }
 
     initButtons() {
@@ -14,7 +15,7 @@ export class Buttons {
             // the stop button correspondent
             but.onclick = () => {
 
-                // TODO Signal to servo
+                this.socket.emit("start");
 
                 this.chrono.start();
                 but.nextElementSibling.disabled = false;
@@ -36,6 +37,9 @@ export class Buttons {
         }
 
         this.reset.onclick = () => {
+
+						this.socket.emit("reset");
+
             this.chrono.reset();
         }
     }
