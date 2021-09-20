@@ -43,6 +43,11 @@ export class Buttons {
 
                 this.tableControl.setActiveTable("0");
                 console.log("Tabla desactivada");
+
+                if(but.parentElement.id === "ronda3")
+                    this.tableControl.selectForFinal();
+                else if(but.parentElement.id === "final")
+                    this.tableControl.fillPodium();
             }
 
             // Disabled all the buttons. The correspond start button enable 

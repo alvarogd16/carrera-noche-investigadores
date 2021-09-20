@@ -1,8 +1,5 @@
 export class Tables {
     constructor() {
-        // HTMLelement to array. Its easy to manipulate
-        // this.tables = [...document.getElementsByClassName("table")];
-
         this.activeTable = "0";
     }
 
@@ -58,5 +55,44 @@ export class Tables {
             switching = true;
           }
         }
+      }
+
+      selectForFinal() {
+        let t1, t2, t3, tmin;
+      
+        document.getElementById('Table4').rows[1].getElementsByTagName("TD")[0].innerHTML 
+          = document.getElementById('Table1').rows[1].getElementsByTagName("TD")[0].innerHTML;
+        document.getElementById('Table4').rows[2].getElementsByTagName("TD")[0].innerHTML 
+          = document.getElementById('Table2').rows[1].getElementsByTagName("TD")[0].innerHTML;
+        document.getElementById('Table4').rows[3].getElementsByTagName("TD")[0].innerHTML 
+          = document.getElementById('Table3').rows[1].getElementsByTagName("TD")[0].innerHTML;
+      
+        t1 = parseFloat(document.getElementById('Table1').rows[2].getElementsByTagName("TD")[1].innerHTML);
+        t2 = parseFloat(document.getElementById('Table2').rows[2].getElementsByTagName("TD")[1].innerHTML);
+        t3 = parseFloat(document.getElementById('Table3').rows[2].getElementsByTagName("TD")[1].innerHTML);
+      
+        tmin = Math.min(t1,t2,t3);
+      
+        if (t1 == tmin) {
+            document.getElementById('Table4').rows[4].getElementsByTagName("TD")[0].innerHTML 
+              = document.getElementById('Table1').rows[2].getElementsByTagName("TD")[0].innerHTML;
+          } else if (t2 == tmin) {
+            document.getElementById('Table4').rows[4].getElementsByTagName("TD")[0].innerHTML 
+              = document.getElementById('Table2').rows[2].getElementsByTagName("TD")[0].innerHTML;
+          }
+         else {
+          document.getElementById('Table4').rows[4].getElementsByTagName("TD")[0].innerHTML 
+            = document.getElementById('Table3').rows[2].getElementsByTagName("TD")[0].innerHTML;
+        }
+        
+      }
+      
+      fillPodium() {
+        document.getElementById('first').innerHTML 
+          = document.getElementById('Table4').rows[1].getElementsByTagName("TD")[0].innerHTML;
+        document.getElementById('second').innerHTML 
+          = document.getElementById('Table4').rows[2].getElementsByTagName("TD")[0].innerHTML;
+        document.getElementById('third').innerHTML 
+          = document.getElementById('Table4').rows[3].getElementsByTagName("TD")[0].innerHTML;
       }
 }
