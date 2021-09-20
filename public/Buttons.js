@@ -1,11 +1,14 @@
 export class Buttons {
-    constructor(startButtons, stopButtons, reset, chrono, socket) {
-        this.startButtons = startButtons;
-        this.stopButtons = stopButtons;
+    constructor(chrono, socket, tableControl) {
+        this.startButtons = document.getElementsByClassName("start");
+        this.stopButtons = document.getElementsByClassName("stop");
+        this.reset = document.getElementById("reset");
+
         this.chrono = chrono;
-        this.reset = reset;
-				this.socket = socket;
+        this.socket = socket;
+        this.tableControl = tableControl;
     }
+
 
     initButtons() {
         // Initialize all start buttons
@@ -19,6 +22,11 @@ export class Buttons {
 
                 this.chrono.start();
                 but.nextElementSibling.disabled = false;
+
+                // Coge el numero de la id del elemento table y la pone como tabla activa
+                var numberTable = but.nextElementSibling.nextElementSibling.id[5];
+                this.tableControl.setActiveTable(numberTable);
+                console.log("Tabla activa: " + numberTable);
             }
         }
 
@@ -27,8 +35,14 @@ export class Buttons {
 
             // Stop the timer and disabled the button
             but.onclick = () => {
+                // El servo vuelve a la posición inicial
+			    this.socket.emit("reset");
+                
                 this.chrono.stop();
                 but.disabled = true;
+
+                this.tableControl.setActiveTable("0");
+                console.log("Tabla desactivada");
             }
 
             // Disabled all the buttons. The correspond start button enable 
@@ -37,10 +51,15 @@ export class Buttons {
         }
 
         this.reset.onclick = () => {
-
-						this.socket.emit("reset");
+            // El servo vuelve a la posición inicial
+			this.socket.emit("reset");
 
             this.chrono.reset();
+
+            this.tableControl.setActiveTable("0");
+            console.log("Tabla desactivada");
+
+            this.tableControl.resetTables();
         }
     }
 }

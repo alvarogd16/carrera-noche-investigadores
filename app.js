@@ -58,7 +58,8 @@ if(isPi()) {
 			fC.on('alert', (level, tick) => {
 				if(level === 0) {
 					console.log("Fin carrera " + index + " con nivel " + level);
-					socket.emit("meta", index);
+					// Sumo uno para que el indice empiece por 1
+					socket.emit("meta", (index+1));
 				}
 			})
 		});
@@ -96,28 +97,6 @@ app.use(express.static('public'));
 app.get('/', (req, res) => {
   res.send('Hello World!')
 })
-
-/*
-// Socket connection. This will provide bidirentional communication to send
-// data (for sensor and actuators)
-io.on('connection', (socket) => {
-  console.log("A user connected");
-
-  socket.on("start", () => {
-    console.log("Race start. Servo down.");
-  })
-
-  socket.on("reset", () => {
-    console.log("Reset race. Servo up.")
-  })
-
-  // In the future this event will emit by sensor in the raspberry pi
-  socket.on("finish", (id) => {
-    console.log(`${id} has finished the race`)
-
-    socket.emit("fin", id)
-  })
-}) */
 
 // Start the server in the indicate port
 server.listen(port, () => {

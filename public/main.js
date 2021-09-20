@@ -5,17 +5,15 @@ import { Buttons } from './Buttons.js';
 var socket = io()
 // socket.emit("start")
 
-var elem = document.getElementById("cronometro");
-var timer = new Cronometro(elem);
+
+var timer = new Cronometro();
 
 var tableControl = new Tables();
-tableControl.resetTimes();
+tableControl.resetTables();
 
-var startButtons = document.getElementsByClassName("start");
-var stopButtons = document.getElementsByClassName("stop");
-var resetButton = document.getElementById("reset");
-var buttons = new Buttons(startButtons, stopButtons, resetButton, timer, socket);
+var buttons = new Buttons(timer, socket, tableControl);
 buttons.initButtons();
+
 
 
 // Botones que simulan la llegada a meta. Envian un evento falso
@@ -27,12 +25,23 @@ var lapBotones = [document.getElementById("lap1"),
                 document.getElementById("lap4")];
 
 lapBotones.forEach((boton, index) => {
-    boton.onclick = () => socket.emit("falsaMeta", index)
+    boton.onclick = () => socket.emit("falsaMeta", (index+1))
 });
 
 // Evento cuando llega a meta alguno de los coches
 // TODO comprobar que fase del torneo es y actualizar valor de tiempo. 
 // TODO seguramente haya que mover de sitio esta función.
 socket.on("meta", (index) => {
-    console.log("Ha llegado a meta el numero " + index);
+    var time = timer.getTime();
+    var activeTable = tableControl.getActiveTable();
+
+    console.log("Ha llegado a meta el numero " + index + " y la tabla activa es " + activeTable);
+    
+    if(activeTable != 0) {
+        var tableTimeId = "t" + activeTable + "p" + index;
+        var tableId = "Table" + activeTable;
+
+        tableControl.insertTable(tableTimeId, time);
+        tableControl.sortTable(tableId);
+    }
 });

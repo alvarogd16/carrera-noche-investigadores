@@ -1,12 +1,10 @@
 export class Cronometro {
-    constructor(elem) {
+    constructor() {
         this.interval;
         this.clock = 0;
         this.offset = 0;
 
-        this.timer = document.createElement("h1");
-        this.timer.id = "crono";
-        elem.appendChild(this.timer);
+        this.timer = document.getElementById("cronometro")
 
         this.reset();
     }
@@ -37,14 +35,14 @@ export class Cronometro {
     }
 
     render() {
-        this.timer.innerHTML = this.clock / 1000;
+        this.timer.innerHTML = (this.clock / 1000).toFixed(3);
     }
 
     lap() {
         console.log(this.clock);
     }
 
-    userLap() {
+    getTime() {
         return this.clock / 1000;
     }
 }
