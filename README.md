@@ -1,4 +1,8 @@
-# carrera-noche-investigadores
+# Carreras de coches reciclados 🏎️♻️
+
+Carreras de coches reciclados impulsados por la gravedad. Una divertida forma de aprender sobre reciclaje, física y electrónica. 
+
+Proyecto realizado en el [Smart Open Lab](https://smartopenlab.com/) de la [Escuela Politécnica](https://www.unex.es/conoce-la-uex/centros/epcc/) de Cáceres.
 
 ## Installation
 You need nodejs and npm
