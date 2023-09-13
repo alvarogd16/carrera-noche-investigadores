@@ -4,7 +4,7 @@ const http = require('http');
 const server = http.createServer(app);
 const { Server } = require("socket.io");
 const io = new Server(server);
-const port = 3000;
+const PORT = 3000;
 
 const isPi = require("detect-rpi");
 
@@ -12,14 +12,26 @@ const isPi = require("detect-rpi");
 /* Raspberry pi logic                         */
 /* ****************************************** */
 
+const PIN_MOTOR = 17;
+const PIN_FIN_CARRERA_1 = 26;
+const PIN_FIN_CARRERA_2 = 19;
+const PIN_FIN_CARRERA_3 = 13;
+const PIN_FIN_CARRERA_4 = 6;
+
 if (isPi()) {
 	console.log("Running in a Raspberry pi");
 
 	const Gpio = require('pigpio').Gpio;
 
 	// Motor init
-	const motor = new Gpio(17, { mode: Gpio.OUTPUT });
-	const servoPulse = { 'RESET': 500, 'START': 2500 };
+	const motor = new Gpio(PIN_MOTOR, { mode: Gpio.OUTPUT });
+
+	const PULSE_WIDTH_READY_POSITION = 500;
+	const PULSE_WIDTH_GO_POSITION = 2500;
+	const servoPulse = {
+		'READY': PULSE_WIDTH_READY_POSITION,
+		'GO': PULSE_WIDTH_GO_POSITION
+	};
 
 	// Fin de carrera init
 	// Estan en orden de izquierda a derecha. Ej. pin4 para el más a la izquierda
@@ -29,15 +41,16 @@ if (isPi()) {
 		alert: true
 	};
 	const finCarrera = [
-		new Gpio(26, finCarreraConfig),
-		new Gpio(19, finCarreraConfig),
-		new Gpio(13, finCarreraConfig),
-		new Gpio(6, finCarreraConfig)
+		new Gpio(PIN_FIN_CARRERA_1, finCarreraConfig),
+		new Gpio(PIN_FIN_CARRERA_2, finCarreraConfig),
+		new Gpio(PIN_FIN_CARRERA_3, finCarreraConfig),
+		new Gpio(PIN_FIN_CARRERA_4, finCarreraConfig)
 	];
 
-	// Para el debounce de los finales de carrera. El numero son los microsegundos que tiene que 
+	// Para el debounce de los finales de carrera. Microsegundos que tiene que
 	// estar el valor para que se notifique la interrupción con alert.
-	finCarrera.forEach(fC => fC.glitchFilter(10000));
+	const GLITCH_MICRO_SECONDS = 10000;
+	finCarrera.forEach(fC => fC.glitchFilter(GLITCH_MICRO_SECONDS));
 
 	// Socket logic
 	io.on('connection', (socket) => {
@@ -46,13 +59,13 @@ if (isPi()) {
 		socket.on("start", () => {
 			console.log("Race start. Servo down");
 
-			motor.servoWrite(servoPulse.START);
+			motor.servoWrite(servoPulse.GO);
 		});
 
 		socket.on("reset", () => {
 			console.log("Race reset. Servo up");
 
-			motor.servoWrite(servoPulse.RESET);
+			motor.servoWrite(servoPulse.READY);
 		});
 
 		// Crea los eventos para todos los finales de carrera
@@ -100,6 +113,6 @@ app.get('/', (req, res) => {
 })
 
 // Start the server in the indicate port
-server.listen(port, () => {
-	console.log(`Example app listening at http://localhost:${port}`)
+server.listen(PORT, () => {
+	console.log(`Example app listening at http://localhost:${PORT}`)
 })
